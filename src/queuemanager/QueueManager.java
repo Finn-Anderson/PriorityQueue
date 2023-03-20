@@ -32,6 +32,9 @@ public class QueueManager {
                 System.out.println("Using a sorted array.");
                 break;
             case "ua":
+                q = new UnsortedArrayPriorityQueue<>(8);
+                System.out.println("Using an unsorted array");
+                break;
             case "sl":
             case "ul":
             case "h":
@@ -58,14 +61,26 @@ public class QueueManager {
             if (input.toLowerCase().charAt(0) == 'a') {
 
                 /* Add an item to the queue */
-                String name = input.substring(2, input.lastIndexOf(' '));
-                Person person = new Person(name);
-                int priority = Integer.parseInt(input.substring(input.lastIndexOf(' ') + 1));
-                System.out.println("Adding " + person.getName() + " with priority " + priority);
+                String name = "";
+                int priority = 0;
+                boolean valid = true;
+
                 try {
-                    q.add(person, priority);
-                } catch (QueueOverflowException e) {
-                    System.out.println("Add operation failed: " + e);
+                    name = input.substring(2, input.lastIndexOf(' '));
+                    priority = Integer.parseInt(input.substring(input.lastIndexOf(' ') + 1));
+                } catch(NumberFormatException | IndexOutOfBoundsException e) {
+                    System.out.println("Invalid input. Missing valid name and/or priority.");
+                    valid = false;
+                }
+
+                if (valid) {
+                    Person person = new Person(name);
+                    System.out.println("Adding " + person.getName() + " with priority " + priority);
+                    try {
+                        q.add(person, priority);
+                    } catch (QueueOverflowException e) {
+                        System.out.println("Add operation failed: " + e);
+                    }
                 }
             } else if (input.toLowerCase().charAt(0) == 'h') {
 
