@@ -1,5 +1,10 @@
 package queuemanager;
 
+/**
+ * Implementation of the PriorityQueue ADT using an unsorted array for storage.
+ *
+ * @param <T> The type of things being stored.
+ */
 public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T> {
 
     /**
@@ -37,7 +42,7 @@ public class UnsortedArrayPriorityQueue<T> implements PriorityQueue<T> {
             tailIndex = tailIndex - 1;
             throw new QueueOverflowException();
         } else {
-            /* Insert item at the end of the array */
+            /* Inserts the item at the end of the array */
             int i = tailIndex;
             storage[i] = new PriorityItem<>(item, priority);
         }
