@@ -15,10 +15,10 @@ public class UnsortedArrayPriorityQueueTest {
         Person person1 = new Person("Rodger");
         Person person2 = new Person("Finn");
 
-        qTest.add(person1, 2);
-        qTest.add(person2, 1);
+        qTest.add(person1, 1);
+        qTest.add(person2, 2);
 
-        assertEquals("Should return Rodger", person1, qTest.head());
+        assertEquals("Should return Finn", person2, qTest.head());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class UnsortedArrayPriorityQueueTest {
         Person[] people = {new Person("Rodger"), new Person("Finn"), new Person("Fred")};
         int[] priorities = {0, 100, -1};
 
-        String target = "[(Finn, 100), (Fred, -1)]";
+        String target = "[(Rodger, 0), (Fred, -1)]";
 
         for (int i = 0; i < people.length; i++) {
             qTest.add(people[i], priorities[i]);
@@ -60,7 +60,7 @@ public class UnsortedArrayPriorityQueueTest {
 
         qTest.remove();
 
-        assertEquals("Should return in this order: Finn, Fred", target, qTest.toString());
+        assertEquals("Should return in this order: Rodger, Fred", target, qTest.toString());
     }
 
     @Test
