@@ -48,26 +48,26 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
     }
 
     private void maxHeapify(int i) {
-        if (i > (tailIndex / 2)) { return; }
-
         int parentPriority = ((PriorityItem<T>) storage[i]).getPriority();
         PriorityItem<T> leftChild = ((PriorityItem<T>) storage[leftChild(i)]);
         PriorityItem<T> rightChild = ((PriorityItem<T>) storage[rightChild(i)]);
 
-        if (rightChild != null) {
-            if (parentPriority < leftChild.getPriority() || parentPriority < rightChild.getPriority()) {
-                if (leftChild.getPriority() > rightChild.getPriority()) {
+        if (leftChild != null) {
+            if (rightChild != null) {
+                if (parentPriority < leftChild.getPriority() || parentPriority < rightChild.getPriority()) {
+                    if (leftChild.getPriority() > rightChild.getPriority()) {
+                        swap(i, leftChild(i));
+                        maxHeapify(leftChild(i));
+                    } else {
+                        swap(i, rightChild(i));
+                        maxHeapify(rightChild(i));
+                    }
+                }
+            } else {
+                if (parentPriority < leftChild.getPriority()) {
                     swap(i, leftChild(i));
                     maxHeapify(leftChild(i));
-                } else {
-                    swap(i, rightChild(i));
-                    maxHeapify(rightChild(i));
                 }
-            }
-        } else {
-            if (parentPriority < leftChild.getPriority()) {
-                swap(i, leftChild(i));
-                maxHeapify(leftChild(i));
             }
         }
     }
@@ -112,7 +112,9 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
 
             tailIndex = tailIndex - 1;
 
-            maxHeapify(0);
+            if (tailIndex > 0) {
+                maxHeapify(0);
+            }
         }
     }
 
@@ -124,7 +126,7 @@ public class HeapPriorityQueue<T> implements PriorityQueue<T> {
     @Override
     public String toString() {
         String result = "[";
-        for (int i = 0; i <= (tailIndex / 2); i++) {
+        for (int i = 0; i <= (tailIndex / 2) && i < (capacity / 2); i++) {
             if (i > 0 && storage[i + 1] != null) {
                 result = result + ", ";
             }
